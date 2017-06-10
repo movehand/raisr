@@ -1,0 +1,8 @@
+train/*
+test/*
+results/*
+
+# Except these files...
+!train/README.md
+!test/README.md
+!results/README.md

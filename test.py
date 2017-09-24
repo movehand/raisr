@@ -10,7 +10,7 @@ from scipy import interpolate
 
 # Define parameters
 R = 2
-patchsize = 11;
+patchsize = 11
 gradientsize = 9
 Qangle = 24
 Qstrength = 3
@@ -36,7 +36,7 @@ weighting = np.diag(weighting.ravel())
 imagelist = []
 for parent, dirnames, filenames in os.walk(trainpath):
     for filename in filenames:
-        if filename.lower().endswith(('.bmp', '.dib', '.png', '.jpg', '.jpeg', '.pbm', '.pgm', '.ppm')):
+        if filename.lower().endswith(('.bmp', '.dib', '.png', '.jpg', '.jpeg', '.pbm', '.pgm', '.ppm', '.tif', '.tiff')):
             imagelist.append(os.path.join(parent, filename))
 
 imagecount = 1

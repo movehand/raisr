@@ -1,6 +1,9 @@
 train/*
 test/*
 results/*
+__pycache__
+filter
+.git-commit-template.txt
 
 # Except these files...
 !train/README.md

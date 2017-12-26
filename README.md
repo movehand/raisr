@@ -16,17 +16,17 @@ You can install most of the following packages using [pip](https://pypi.python.o
 
 ### Training
 
-Put your training images in the `train` directory, and run the following command to start training.
+Put your training images in the `train` directory. The training images are the **high resolution (HR)** ones. Run the following command to start training.
 
 ```
 python train.py
 ```
 
-The learned filters will be saved in the root directory of the project.
+In the training stage, the program virtually downscales the high resolution images. The program then trains the model using the downscaled version images and the original HR images. The learned filters will be saved in the root directory of the project.
 
 ### Testing
 
-Put your testing images in the `test` directory, and run the following command to start generating high resolution images using RAISR.
+Put your testing images in the `test` directory. Basically, you can use some **low resolution (LR)** images as your testing images. By running the following command, the HR version of your testing images will be generated using RAISR.
 
 ```
 python test.py

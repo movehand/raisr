@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import os
 import pickle
+import sys
 from scipy.misc import imresize
 from cgls import cgls
 from filterplot import filterplot
@@ -76,6 +77,7 @@ for image in imagelist:
                 print('#' * round((operationcount+1)*100/totaloperations/2), end='')
                 print(' ' * (50 - round((operationcount+1)*100/totaloperations/2)), end='')
                 print('|  ' + str(round((operationcount+1)*100/totaloperations)) + '%', end='')
+                sys.stdout.flush()
             operationcount += 1
             # Get patch
             patch = upscaledLR[row-patchmargin:row+patchmargin+1, col-patchmargin:col+patchmargin+1]
@@ -102,6 +104,7 @@ for image in imagelist:
 print('\r', end='')
 print(' ' * 60, end='')
 print('\rPreprocessing permutation matrices P for nearly-free 8x more learning examples ...')
+sys.stdout.flush()
 P = np.zeros((patchsize*patchsize, patchsize*patchsize, 7))
 rotate = np.zeros((patchsize*patchsize, patchsize*patchsize))
 flip = np.zeros((patchsize*patchsize, patchsize*patchsize))
@@ -140,6 +143,7 @@ V += Vextended
 
 # Compute filter h
 print('Computing h ...')
+sys.stdout.flush()
 operationcount = 0
 totaloperations = R * R * Qangle * Qstrength * Qcoherence
 for pixeltype in range(0, R*R):
@@ -151,6 +155,7 @@ for pixeltype in range(0, R*R):
                     print('#' * round((operationcount+1)*100/totaloperations/2), end='')
                     print(' ' * (50 - round((operationcount+1)*100/totaloperations/2)), end='')
                     print('|  ' + str(round((operationcount+1)*100/totaloperations)) + '%', end='')
+                    sys.stdout.flush()
                 operationcount += 1
                 h[angle,strength,coherence,pixeltype] = cgls(Q[angle,strength,coherence,pixeltype], V[angle,strength,coherence,pixeltype])
 

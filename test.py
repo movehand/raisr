@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import os
 import pickle
+import sys
 from gaussian2d import gaussian2d
 from hashkey import hashkey
 from math import floor
@@ -70,6 +71,7 @@ for image in imagelist:
                 print('#' * round((operationcount+1)*100/totaloperations/2), end='')
                 print(' ' * (50 - round((operationcount+1)*100/totaloperations/2)), end='')
                 print('|  ' + str(round((operationcount+1)*100/totaloperations)) + '%', end='')
+                sys.stdout.flush()
             operationcount += 1
             # Get patch
             patch = upscaledLR[row-patchmargin:row+patchmargin+1, col-patchmargin:col+patchmargin+1]
@@ -82,7 +84,7 @@ for image in imagelist:
             pixeltype = ((row-margin) % R) * R + ((col-margin) % R)
             predictHR[row-margin,col-margin] = patch.dot(h[angle,strength,coherence,pixeltype])
     # Scale back to [0,255]
-    predictHR = cv2.normalize(predictHR.astype('float'), None, 0, 255, cv2.NORM_MINMAX)
+    predictHR = np.clip(predictHR.astype('float') * 255., 0., 255.)
     fig = plt.figure()
     ax = fig.add_subplot(1, 4, 1)
     ax.imshow(grayorigin, cmap='gray', interpolation='none')

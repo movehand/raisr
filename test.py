@@ -4,10 +4,13 @@ import os
 import pickle
 import sys
 from gaussian2d import gaussian2d
+from gettestargs import gettestargs
 from hashkey import hashkey
 from math import floor
 from matplotlib import pyplot as plt
 from scipy import interpolate
+
+args = gettestargs()
 
 # Define parameters
 R = 2
@@ -25,7 +28,10 @@ patchmargin = floor(patchsize/2)
 gradientmargin = floor(gradientsize/2)
 
 # Read filter from file
-with open("filter", "rb") as fp:
+filtername = 'filter'
+if args.filter:
+    filtername = args.filter
+with open(filtername, "rb") as fp:
     h = pickle.load(fp)
 
 # Matrix preprocessing
@@ -85,13 +91,6 @@ for image in imagelist:
             predictHR[row-margin,col-margin] = patch.dot(h[angle,strength,coherence,pixeltype])
     # Scale back to [0,255]
     predictHR = np.clip(predictHR.astype('float') * 255., 0., 255.)
-    fig = plt.figure()
-    ax = fig.add_subplot(1, 4, 1)
-    ax.imshow(grayorigin, cmap='gray', interpolation='none')
-    ax = fig.add_subplot(1, 4, 2)
-    ax.imshow(upscaledLR, cmap='gray', interpolation='none')
-    ax = fig.add_subplot(1, 4, 3)
-    ax.imshow(predictHR, cmap='gray', interpolation='none')
     # Bilinear interpolation on CbCr field
     result = np.zeros((heightHR, widthHR, 3))
     y = ycrcvorigin[:,:,0]
@@ -105,12 +104,20 @@ for image in imagelist:
     result[:,:,2] = bilinearinterp(widthgridHR, heightgridHR)
     result[margin:heightHR-margin,margin:widthHR-margin,0] = predictHR
     result = cv2.cvtColor(np.uint8(result), cv2.COLOR_YCrCb2RGB)
-    ax = fig.add_subplot(1, 4, 4)
-    ax.imshow(result, interpolation='none')
     cv2.imwrite('results/' + os.path.splitext(os.path.basename(image))[0] + '_result.bmp', cv2.cvtColor(result, cv2.COLOR_RGB2BGR))
     imagecount += 1
-    # Uncomment the following line to visualize the process of RAISR image upscaling
-    # plt.show()
+    # Visualizing the process of RAISR image upscaling
+    if args.plot:
+        fig = plt.figure()
+        ax = fig.add_subplot(1, 4, 1)
+        ax.imshow(grayorigin, cmap='gray', interpolation='none')
+        ax = fig.add_subplot(1, 4, 2)
+        ax.imshow(upscaledLR, cmap='gray', interpolation='none')
+        ax = fig.add_subplot(1, 4, 3)
+        ax.imshow(predictHR, cmap='gray', interpolation='none')
+        ax = fig.add_subplot(1, 4, 4)
+        ax.imshow(result, interpolation='none')
+        plt.show()
 
 print('\r', end='')
 print(' ' * 60, end='')

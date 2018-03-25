@@ -7,10 +7,13 @@ from scipy.misc import imresize
 from cgls import cgls
 from filterplot import filterplot
 from gaussian2d import gaussian2d
+from gettrainargs import gettrainargs
 from hashkey import hashkey
 from math import floor
 from matplotlib import pyplot as plt
 from scipy import interpolate
+
+args = gettrainargs()
 
 # Define parameters
 R = 2
@@ -163,8 +166,9 @@ for pixeltype in range(0, R*R):
 with open("filter", "wb") as fp:
     pickle.dump(h, fp)
 
-# Uncomment the following line to show the learned filters
-# filterplot(h, R, Qangle, Qstrength, Qcoherence, patchsize)
+# Plot the learned filters
+if args.plot:
+    filterplot(h, R, Qangle, Qstrength, Qcoherence, patchsize)
 
 print('\r', end='')
 print(' ' * 60, end='')

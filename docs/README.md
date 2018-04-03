@@ -1,4 +1,4 @@
-## docs
+## Docs
 
 How to get started with development for raisr.
 

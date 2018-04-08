@@ -1,6 +1,6 @@
 # RAISR
 
-A Python implementation of [RAISR](http://ieeexplore.ieee.org/document/7744595/). Supporting color images.
+A Python implementation of [RAISR](http://ieeexplore.ieee.org/document/7744595/)
 
 ## How To Use
 
@@ -70,6 +70,10 @@ Other results using images taken from [BSDS500 database](https://www2.eecs.berke
 |![origin_crop bmp](https://user-images.githubusercontent.com/12198424/27002925-81cf7f88-4e1f-11e7-8a75-4975db1d37b8.png)|![raisr_crop bmp](https://user-images.githubusercontent.com/12198424/27002926-81d126b2-4e1f-11e7-8814-f2fce323caac.png)|
 |![origin_crop bmp](https://user-images.githubusercontent.com/12198424/27002932-a39f6cc2-4e1f-11e7-9dea-3aa79a9d9764.png)|![raisr_crop bmp](https://user-images.githubusercontent.com/12198424/27002933-a3a248ac-4e1f-11e7-9c81-807d3a5eac90.png)|
 |![origin_crop bmp](https://user-images.githubusercontent.com/12198424/27002942-c9ba697a-4e1f-11e7-8743-d41be65c09d3.png)|![raisr_crop bmp](https://user-images.githubusercontent.com/12198424/27002943-c9bcefd8-4e1f-11e7-9e55-bf5d93f17a9c.png)|
+
+## Contribute
+
+We actively welcome pull requests. Learn how to [contribute](https://github.com/movehand/raisr/blob/master/docs/CONTRIBUTING.md).
 
 ## References
 

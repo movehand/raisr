@@ -3,7 +3,6 @@ import numpy as np
 import os
 import pickle
 import sys
-from scipy.misc import imresize
 from cgls import cgls
 from filterplot import filterplot
 from gaussian2d import gaussian2d
@@ -12,6 +11,7 @@ from hashkey import hashkey
 from math import floor
 from matplotlib import pyplot as plt
 from scipy import interpolate
+from skimage import transform
 
 args = gettrainargs()
 
@@ -33,7 +33,14 @@ gradientmargin = floor(gradientsize/2)
 Q = np.zeros((Qangle, Qstrength, Qcoherence, R*R, patchsize*patchsize, patchsize*patchsize))
 V = np.zeros((Qangle, Qstrength, Qcoherence, R*R, patchsize*patchsize))
 h = np.zeros((Qangle, Qstrength, Qcoherence, R*R, patchsize*patchsize))
-mark = np.zeros((Qstrength*Qcoherence, Qangle, R*R))
+
+# Read Q,V from file
+if args.qmatrix:
+    with open(args.qmatrix, "rb") as fp:
+        Q = pickle.load(fp)
+if args.vmatrix:
+    with open(args.vmatrix, "rb") as fp:
+        V = pickle.load(fp)
 
 # Matrix preprocessing
 # Preprocessing normalized Gaussian matrix W for hashkey calculation
@@ -60,7 +67,7 @@ for image in imagelist:
     grayorigin = cv2.normalize(grayorigin.astype('float'), None, grayorigin.min()/255, grayorigin.max()/255, cv2.NORM_MINMAX)
     # Downscale (bicubic interpolation)
     height, width = grayorigin.shape
-    LR = imresize(grayorigin, (floor((height+1)/2),floor((width+1)/2)), interp='bicubic', mode='F')
+    LR = transform.resize(grayorigin, (floor((height+1)/2),floor((width+1)/2)), mode='reflect', anti_aliasing=False)
     # Upscale (bilinear interpolation)
     height, width = LR.shape
     heightgrid = np.linspace(0, height-1, height)
@@ -100,8 +107,13 @@ for image in imagelist:
             # Compute Q and V
             Q[angle,strength,coherence,pixeltype] += ATA
             V[angle,strength,coherence,pixeltype] += ATb
-            mark[coherence*3+strength, angle, pixeltype] += 1
     imagecount += 1
+
+# Write Q,V to file
+with open("q.p", "wb") as fp:
+    pickle.dump(Q, fp)
+with open("v.p", "wb") as fp:
+    pickle.dump(V, fp)
 
 # Preprocessing permutation matrices P for nearly-free 8x more learning examples
 print('\r', end='')
@@ -163,7 +175,7 @@ for pixeltype in range(0, R*R):
                 h[angle,strength,coherence,pixeltype] = cgls(Q[angle,strength,coherence,pixeltype], V[angle,strength,coherence,pixeltype])
 
 # Write filter to file
-with open("filter", "wb") as fp:
+with open("filter.p", "wb") as fp:
     pickle.dump(h, fp)
 
 # Plot the learned filters

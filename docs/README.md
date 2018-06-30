@@ -7,7 +7,7 @@ Clone the project [here](https://github.com/movehand/raisr).
 Install all of the dependencies with this:
 
 ```
-pip install opencv-python numpy scipy image matplotlib
+pip install opencv-python numpy scipy image matplotlib scikit-image
 ```
 
 We are still getting the project documented, but once that is complete we will put up the rest of the docs.

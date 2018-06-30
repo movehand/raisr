@@ -28,7 +28,7 @@ patchmargin = floor(patchsize/2)
 gradientmargin = floor(gradientsize/2)
 
 # Read filter from file
-filtername = 'filter'
+filtername = 'filter.p'
 if args.filter:
     filtername = args.filter
 with open(filtername, "rb") as fp:

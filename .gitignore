@@ -2,7 +2,7 @@ train/*
 test/*
 results/*
 __pycache__
-filter
+*.p
 
 # Except these files...
 !train/README.md

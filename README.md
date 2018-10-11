@@ -6,7 +6,11 @@ A Python implementation of [RAISR](http://ieeexplore.ieee.org/document/7744595/)
 
 ### Prerequisites
 
+You need Python 3.x, older versions don't work out-of-the-box.
+
 You can install most of the following packages using [pip](https://pypi.python.org/pypi/pip).
+
+It is also important to have a 64 bit version of Python 3.x
 
 * [OpenCV-Python](https://pypi.python.org/pypi/opencv-python)
 * [NumPy](http://www.numpy.org/)

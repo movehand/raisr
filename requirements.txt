@@ -1,0 +1,17 @@
+cloudpickle==0.6.1
+cycler==0.10.0
+dask==1.0.0
+decorator==4.3.0
+kiwisolver==1.0.1
+matplotlib==3.0.2
+networkx==2.2
+numpy==1.15.4
+opencv-python==3.4.5.20
+Pillow==5.4.1
+pyparsing==2.3.0
+python-dateutil==2.7.5
+PyWavelets==1.0.1
+scikit-image==0.14.1
+scipy==1.2.0
+six==1.12.0
+toolz==0.9.0

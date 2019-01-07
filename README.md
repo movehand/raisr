@@ -6,7 +6,9 @@ A Python implementation of [RAISR](http://ieeexplore.ieee.org/document/7744595/)
 
 ### Prerequisites
 
-You can install most of the following packages using [pip](https://pypi.python.org/pypi/pip).
+You can install most of the following packages using [pip](https://pypi.python.org/pypi/pip):
+
+`pip install -r requirements.txt`
 
 * [OpenCV-Python](https://pypi.python.org/pypi/opencv-python)
 * [NumPy](http://www.numpy.org/)

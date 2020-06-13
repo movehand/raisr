@@ -62,8 +62,8 @@ for image in imagelist:
     heightgridLR = np.linspace(0,heightLR-1,heightLR)
     widthgridLR = np.linspace(0,widthLR-1,widthLR)
     bilinearinterp = interpolate.interp2d(widthgridLR, heightgridLR, grayorigin, kind='linear')
-    heightgridHR = np.linspace(0,heightLR-0.5,heightLR*2)
-    widthgridHR = np.linspace(0,widthLR-0.5,widthLR*2)
+    heightgridHR = np.linspace(0,heightLR-0.5,heightLR*R)
+    widthgridHR = np.linspace(0,widthLR-0.5,widthLR*R)
     upscaledLR = bilinearinterp(widthgridHR, heightgridHR)
     # Calculate predictHR pixels
     heightHR, widthHR = upscaledLR.shape
